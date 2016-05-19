@@ -1,0 +1,2 @@
+class Pub < ApplicationRecord
+end
