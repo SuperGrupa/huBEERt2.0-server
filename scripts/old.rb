@@ -8,8 +8,11 @@ def parse_arguments
         opts.on("-dID", "--delete=ID", "Delete pub with given id") do |p|
             options[:delete] = p
         end
-        opts.on("-p", "--post", "Create new pub") do |p|
+        opts.on("-c", "--create", "Create new pub") do |p|
             options[:post] = true
+        end
+        opts.on("-uID", "--update=ID", "Update pub with given id") do |p|
+            options[:update] = true
         end
         
         opts.on("--pub=FILE", "JSON file with pub data") do |p|
@@ -23,6 +26,9 @@ options = parse_arguments
 
 if options[:post]
     puts %x(curl -s -D - -X POST -d @#{options[:pub]} localhost:3000/pubs -H "Accept: application/json" -H "Content-Type:application/json")
+end
+if options[:update]
+    puts %x(curl -s -D - -X UPDATE -d @#{options[:pub]} localhost:3000/pubs/#{options[:update]} -H "Accept: application/json" -H "Content-Type:application/json")
 end
 if options[:delete]
     puts %x(curl -s -D - -X DELETE localhost:3000/pubs/#{options[:delete]} -H "Accept: application/json" -H "Content-Type:application/json")

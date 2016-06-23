@@ -3,11 +3,15 @@ class PubsController < ApplicationController
 
   # GET /pubs
   def index
-    @pubs = Pub.all
+    if params[:q]
+      @pubs = Pub.where("name ILIKE ?", "%#{params[:q]}%")
+    else
+      @pubs = Pub.all
+    end
 
     render json: @pubs
   end
-
+  
   # GET /pubs/1
   def show
     render json: @pub

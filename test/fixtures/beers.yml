@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyString
+  alcohol: 9.99
+  extract: 9.99
+  volume: 9.99
+
+two:
+  name: MyString
+  description: MyString
+  alcohol: 9.99
+  extract: 9.99
+  volume: 9.99
