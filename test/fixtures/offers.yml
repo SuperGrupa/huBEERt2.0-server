@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pub: one
+  beer: one
+  value: 9.99
+
+two:
+  pub: two
+  beer: two
+  value: 9.99
