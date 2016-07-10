@@ -1,0 +1,19 @@
+language: ruby
+script:
+- bundle exec rake db:create
+- bundle exec rake db:migrate
+- bundle exec rake
+before_script:
+- cp config/database.travis.yml config/database.yml
+- psql -c 'create database huBEERt_test' -U postgres
+notifications:
+  email: false
+deploy:
+  provider: heroku
+  api_key:
+    secure: 96CLQptzX6Ya97xFKFcW7NJm7+9HhckykrT9W80JpcG0LQ7tKl2+pcSSELOfD9X+HMB813GNJJIspeSbjvCJvFYxc+WpFgKgH+y7VdLT5JE8sPYVW3xfNmc9cucSUCjf6VEvJG83WQKTpUflOWEDqvXxWrK6XKH2rxhWEtvt/ZyAR5ckiwVCkQXyS2JqsNy7YMevZwP2+st8dkvtrufy6jQgLrY0DWkak+IOuvyBS1qlOHhWJiC9CZXEZVUFLnR9coW0e5QWVnmTlqeU4ASBYx61KOQpHrke/cLr/iZ6ggYp20fdlcbR6UcjqEAbshr57rlT1W5S5OM4IAg6WqLGIodi47COIvCNg/92uJhyqIYkGi/Zxzk+cgnmC1CGAtZj8kkyK56UmHCyPhGXSYxgWCqU7ERcPP2AyOg5l3WgXy4DBEesYt8E54wRgmPX7LsBU9W38NwkKpSqQhxvyCmsYAYGoFGXe/rZeDk/vBD/mQU86UvfqLsZx0NdwP0O/dkVSuIv0RnHGl3/jAJ0Rdg8oLbWuvP7k/chd/iRGd4lNvtwbV15+DI68XhFradL/3+KwLjQslUyIPp4SlsQRQZCgLfEZtwjZoMbX+gPveAmyHhRG1xe4F1qeacrvOvilSpedf5N0X1rYQalvdSfZ0VaVWFXe69wIwh6BVHv4djuNi8=
+  app: hubeert-server
+  on:
+    repo: SuperGrupa/huBEERt2.0-server
+  run:
+    - "rake db:migrate"
