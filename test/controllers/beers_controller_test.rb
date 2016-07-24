@@ -27,12 +27,4 @@ class BeersControllerTest < ActionDispatch::IntegrationTest
     patch beer_url(@beer), params: { beer: { alcohol: @beer.alcohol, description: @beer.description, extract: @beer.extract, name: @beer.name, volume: @beer.volume } }
     assert_response 200
   end
-
-  test "should destroy beer" do
-    assert_difference('Beer.count', -1) do
-      delete beer_url(@beer)
-    end
-
-    assert_response 204
-  end
 end
