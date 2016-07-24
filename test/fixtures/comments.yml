@@ -2,10 +2,12 @@
 
 one:
   pub: one
+  user: one
   text: MyString
   rating: 1
 
 two:
   pub: two
+  user: two
   text: MyString
   rating: 1

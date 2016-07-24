@@ -12,7 +12,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create comment" do
     assert_difference('Comment.count') do
-      post comments_url, params: { comment: { pub_id: @comment.pub_id, rating: @comment.rating, text: @comment.text } }
+      post comments_url, params: { comment: { pub_id: @comment.pub_id, rating: @comment.rating, text: @comment.text, user_id: @comment.user_id } }
     end
 
     assert_response 201
