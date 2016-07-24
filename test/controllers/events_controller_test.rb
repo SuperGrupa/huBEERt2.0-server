@@ -27,12 +27,4 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
     patch event_url(@event), params: { event: { date: @event.date, description: @event.description, name: @event.name, pub_id: @event.pub_id } }
     assert_response 200
   end
-
-  test "should destroy event" do
-    assert_difference('Event.count', -1) do
-      delete event_url(@event)
-    end
-
-    assert_response 204
-  end
 end

@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :update, :destroy]
+  before_action :set_event, only: [:show, :update]
 
   # GET /events
   def index
@@ -31,11 +31,6 @@ class EventsController < ApplicationController
     else
       render json: @event.errors, status: :unprocessable_entity
     end
-  end
-
-  # DELETE /events/1
-  def destroy
-    @event.destroy
   end
 
   private
