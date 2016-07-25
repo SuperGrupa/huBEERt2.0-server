@@ -1,15 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  description: MyString
-  alcohol: 9.99
-  extract: 9.99
-  volume: 9.99
-
-two:
-  name: MyString
-  description: MyString
-  alcohol: 9.99
-  extract: 9.99
-  volume: 9.99
+pils:
+  name: PolskiPils
+  description: Najlepszy polski Pils
+  alcohol: 4.5
+  extract: 12
+  volume: 0.5

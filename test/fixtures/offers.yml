@@ -2,7 +2,7 @@
 
 one:
   pub: one
-  beer: one
+  beer: pils
   value: 9.99
 
 two:

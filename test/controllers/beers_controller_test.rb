@@ -2,7 +2,7 @@ require 'test_helper'
 
 class BeersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @beer = beers(:one)
+    @beer = beers(:pils)
   end
 
   test "should get index" do
