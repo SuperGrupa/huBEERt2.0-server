@@ -6,25 +6,33 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get events_url
+    get pub_events_url(@event.pub_id)
     assert_response :success
   end
 
   test "should create event" do
     assert_difference('Event.count') do
-      post events_url, params: { event: { date: @event.date, description: @event.description, name: @event.name, pub_id: @event.pub_id } }
+      post pub_events_url(@event.pub_id), params: {
+        event: {
+          date: @event.date, description: @event.description, name: @event.name, pub_id: @event.pub_id
+        }
+      }
     end
 
     assert_response 201
   end
 
   test "should show event" do
-    get event_url(@event)
+    get pub_event_url(@event.pub_id, @event)
     assert_response :success
   end
 
   test "should update event" do
-    patch event_url(@event), params: { event: { date: @event.date, description: @event.description, name: @event.name, pub_id: @event.pub_id } }
+    patch pub_event_url(@event.pub_id, @event), params: {
+      event: {
+        date: @event.date, description: @event.description, name: @event.name, pub_id: @event.pub_id
+      }
+    }
     assert_response 200
   end
 end

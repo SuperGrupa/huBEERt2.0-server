@@ -6,31 +6,39 @@ class OffersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get offers_url
+    get pub_offers_url(@offer.pub_id)
     assert_response :success
   end
 
   test "should create offer" do
     assert_difference('Offer.count') do
-      post offers_url, params: { offer: { beer_id: @offer.beer_id, pub_id: @offer.pub_id, value: @offer.value } }
+      post pub_offers_url(@offer.pub_id), params: {
+        offer: {
+          beer_id: @offer.beer_id, pub_id: @offer.pub_id, value: @offer.value
+        }
+      }
     end
 
     assert_response 201
   end
 
   test "should show offer" do
-    get offer_url(@offer)
+    get pub_offer_url(@offer.pub_id, @offer)
     assert_response :success
   end
 
   test "should update offer" do
-    patch offer_url(@offer), params: { offer: { beer_id: @offer.beer_id, pub_id: @offer.pub_id, value: @offer.value } }
+    patch pub_offer_url(@offer.pub_id, @offer), params: {
+      offer: {
+        beer_id: @offer.beer_id, pub_id: @offer.pub_id, value: @offer.value
+      }
+    }
     assert_response 200
   end
 
   test "should destroy offer" do
     assert_difference('Offer.count', -1) do
-      delete offer_url(@offer)
+      delete pub_offer_url(@offer.pub_id, @offer)
     end
 
     assert_response 204

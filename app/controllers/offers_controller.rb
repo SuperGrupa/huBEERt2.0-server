@@ -18,7 +18,7 @@ class OffersController < ApplicationController
     @offer = Offer.new(offer_params)
 
     if @offer.save
-      render json: @offer, status: :created, location: @offer
+      render json: @offer, status: :created, location: pub_offer_url(@offer.pub_id, @offer)
     else
       render json: @offer.errors, status: :unprocessable_entity
     end
