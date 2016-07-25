@@ -1,11 +1,4 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  value: MyString
-  expire: 2016-07-24 22:26:01
   user: one
-
-two:
-  value: MyString
-  expire: 2016-07-24 22:26:01
-  user: two

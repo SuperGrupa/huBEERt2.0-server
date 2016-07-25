@@ -10,7 +10,7 @@ class Event < ApplicationRecord
   private
 
     def date_from_now
-      if self.date && self.date < DateTime.now
+      if self.date && self.date < Time.now
         errors.add(:date, "event must be marked with future date")
       end
     end

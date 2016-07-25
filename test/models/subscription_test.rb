@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class SubscriptionTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  # Na razie zamiast klasy Subscription mogłaby być zwykła join table
+  # UsersPubs, ale być może będę chciał przechowywać tu dodatkowe informacje
 end

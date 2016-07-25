@@ -2,7 +2,8 @@ require 'test_helper'
 
 class TokensControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @token = tokens(:one)
+    @fixture = tokens(:one)
+    @token = Token.create!(value: "a"*64, expire: 10.minutes.from_now, user_id: @fixture.user_id)
   end
 
   test "should create token" do
