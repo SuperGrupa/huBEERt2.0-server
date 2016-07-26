@@ -21,9 +21,6 @@ class OfferTest < ActiveSupport::TestCase
 
     @offer.value = 0.00
     assert_not @offer.valid?
-
-    @offer.value = 1.234
-    assert_not @offer.valid?
   end
 
   test "offer from fixture should be valid" do
