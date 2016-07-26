@@ -1,13 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  login: MyString
-  email: MyString
-  password: MyString
-  salt: MyString
-
-two:
-  login: MyString
-  email: MyString
-  password: MyString
-  salt: MyString
+  login: bartas
+  email: bartas@gmail.com
+  password: abcdef
+  salt: <%= "a"*64 %>

@@ -11,8 +11,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create user" do
+    unique = {
+      login: 'admin1',
+      email: 'abc@def.com'
+    }
+
     assert_difference('User.count') do
-      post users_url, params: { user: { email: @user.email, login: @user.login, password: @user.password, salt: @user.salt } }
+      post users_url, params: {
+        user: {
+          email: unique[:email], login: unique[:login], password: @user.password, salt: @user.salt
+        }
+      }
     end
 
     assert_response 201
@@ -24,7 +33,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update user" do
-    patch user_url(@user), params: { user: { email: @user.email, login: @user.login, password: @user.password, salt: @user.salt } }
+    patch user_url(@user), params: {
+      user: {
+        email: @user.email, login: @user.login, password: @user.password, salt: @user.salt
+      }
+    }
     assert_response 200
   end
 
