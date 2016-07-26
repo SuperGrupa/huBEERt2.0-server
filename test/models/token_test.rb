@@ -2,8 +2,7 @@ require 'test_helper'
 
 class TokenTest < ActiveSupport::TestCase
   def setup
-    @fixture = tokens(:one)
-    @token = Token.create!(value: "a"*64, expire: 10.minutes.from_now, user_id: @fixture.user_id)
+    @token = tokens(:one)
   end
 
   test "it's not valid without specifing attributes" do

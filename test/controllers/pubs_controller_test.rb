@@ -12,7 +12,11 @@ class PubsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create pub" do
     assert_difference('Pub.count') do
-      post pubs_url, params: { pub: { description: @pub.description, email: @pub.email, hidden: @pub.hidden, name: @pub.name, phone: @pub.phone } }
+      post pubs_url, params: {
+        pub: {
+          description: @pub.description, email: 'abc@def.com', hidden: @pub.hidden, name: @pub.name, phone: @pub.phone
+        }
+      }
     end
 
     assert_response 201
@@ -24,7 +28,11 @@ class PubsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update pub" do
-    patch pub_url(@pub), params: { pub: { description: @pub.description, email: @pub.email, hidden: @pub.hidden, name: @pub.name, phone: @pub.phone } }
+    patch pub_url(@pub), params: {
+      pub: {
+        description: @pub.description, email: @pub.email, hidden: @pub.hidden, name: @pub.name, phone: @pub.phone
+      }
+    }
     assert_response 200
   end
 

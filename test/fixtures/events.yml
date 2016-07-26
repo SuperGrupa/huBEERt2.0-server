@@ -3,5 +3,5 @@
 one:
   pub: one
   name: Turniej w piłkarzyki
-  date: 2017-06-23
+  date: <%= 1.month.from_now %>
   description: Zapraszamy wszystkich domorosłych mistrzów gry!

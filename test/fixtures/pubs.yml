@@ -1,15 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  description: MyString
-  phone: 1
-  email: MyString
-  hidden: false
-
-two:
-  name: MyString
-  description: MyString
-  phone: 1
-  email: MyString
+  name: U Odyna
+  description: Najlepsza knajpka na świecie
+  phone: 123456789
+  email: example@gmail.com
   hidden: false
