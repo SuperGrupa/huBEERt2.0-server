@@ -17,4 +17,8 @@ class Pub < ApplicationRecord
     end
     (stars.to_f / self.comments.length).round(1)
   end
+
+  def general_info
+    { id: self.id, name: self.name, rating: self.rating, comments: self.comments.length }
+  end
 end

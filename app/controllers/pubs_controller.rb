@@ -9,7 +9,7 @@ class PubsController < ApplicationController
       @pubs = Pub.all.includes(:comments)
     end
 
-    render json: @pubs.map { |pub| { name: pub.name, rating: pub.rating } }
+    render json: @pubs.map { |pub| pub.general_info }
   end
 
   # GET /pubs/1
