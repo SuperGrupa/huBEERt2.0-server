@@ -4,14 +4,14 @@ class PubsController < ApplicationController
   # GET /pubs
   def index
     if params[:q]
-      @pubs = Pub.where("name ILIKE ?", "%#{params[:q]}%")
+      @pubs = Pub.where("name ILIKE ?", "%#{params[:q]}%").includes(:comments)
     else
-      @pubs = Pub.all
+      @pubs = Pub.all.includes(:comments)
     end
 
-    render json: @pubs
+    render json: @pubs.map { |pub| { name: pub.name, rating: pub.rating } }
   end
-  
+
   # GET /pubs/1
   def show
     render json: @pub
