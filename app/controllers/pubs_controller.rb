@@ -1,12 +1,17 @@
 class PubsController < ApplicationController
   before_action :set_pub, only: [:show, :update, :destroy]
+  before_action :sanitize_params, only: :index
 
-  # GET /pubs
+  PAGE_SIZE = 10
+
+  # GET /pubs?page[&q]
   def index
     if params[:q]
       @pubs = Pub.where("name ILIKE ?", "%#{params[:q]}%").includes(:comments)
+                 .limit(PAGE_SIZE).offset((params[:page] - 1)*PAGE_SIZE)
     else
       @pubs = Pub.all.includes(:comments)
+                 .limit(PAGE_SIZE).offset((params[:page] - 1)*PAGE_SIZE)
     end
 
     render json: @pubs.map { |pub| pub.general_info }
@@ -51,5 +56,13 @@ class PubsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def pub_params
       params.require(:pub).permit(:name, :description, :phone, :email, :hidden)
+    end
+
+    # Convert :page param to integer
+    def sanitize_params
+      params.require(:page)
+      params.permit(:q, :page)
+
+      params[:page] = params[:page].to_i
     end
 end
