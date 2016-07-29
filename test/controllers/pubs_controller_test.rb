@@ -6,7 +6,7 @@ class PubsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get pubs_url
+    get pubs_url, params: { page: 1, q: 'double' }
     assert_response :success
   end
 
