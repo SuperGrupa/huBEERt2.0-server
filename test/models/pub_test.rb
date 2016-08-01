@@ -55,6 +55,14 @@ class PubTest < ActiveSupport::TestCase
     assert_not @pub.valid?
   end
 
+  test "address must be present and up to 50 characters" do
+    @pub.address = ""
+    assert_not @pub.valid?
+
+    @pub.address = "a"*51
+    assert_not @pub.valid?
+  end
+
   test "pub from fixture should be valid" do
     assert @pub.valid?
   end

@@ -17,7 +17,7 @@ class PubsControllerTest < ActionDispatch::IntegrationTest
       post pubs_url, params: {
         pub: {
           description: @pub.description, email: 'abc@def.com', hidden: @pub.hidden, name: @pub.name, phone: @pub.phone,
-          city_id: city.id
+          address: @pub.address, city_id: city.id
         }
       }
     end

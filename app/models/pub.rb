@@ -11,6 +11,7 @@ class Pub < ApplicationRecord
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i },
                     uniqueness: true
   validates :hidden, inclusion: { in: [ true, false ] }
+  validates :address, presence: true, length: { maximum: 50 }
 
   def rating
     stars = self.comments.reduce(0) do |acc, c|
