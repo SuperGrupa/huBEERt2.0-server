@@ -1,5 +1,6 @@
 class Seed
   def run
+    cities
     beers
     pubs
     users
@@ -14,6 +15,14 @@ class Seed
   end
 
   private
+
+    def cities
+      3.times do
+        City.create!(
+          name: Faker::Address.city
+        )
+      end
+    end
 
     def beers
       20.times do
@@ -35,15 +44,18 @@ class Seed
         "Levy's", "The Lizard's Head", "The Midnight Star", "Night Shot", "The Old Pink Dog", "Los Pollos Hermanos"
       ]
 
-      10.times do
-        name = fictional_names[Random.rand(fictional_names.length)]
-        Pub.create!(
-          name: name,
-          description: Faker::Lorem.paragraph.slice(0, 300),
-          phone: Random.rand(899999999) + 100000000,
-          email: Faker::Internet.email(name),
-          hidden: Faker::Boolean.boolean(0.2)
-        )
+      City.all.each_with_index do |city, i|
+        7.times do |j|
+          name = fictional_names[i*j]
+          Pub.create!(
+            name: name,
+            description: Faker::Lorem.paragraph.slice(0, 300),
+            phone: Random.rand(899999999) + 100000000,
+            email: Faker::Internet.email(name),
+            hidden: Faker::Boolean.boolean(0.2),
+            city_id: city.id
+          )
+        end
       end
     end
 
