@@ -52,7 +52,7 @@ class PubsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def pub_params
-      params.require(:pub).permit(:name, :description, :phone, :email, :hidden)
+      params.require(:pub).permit(:name, :description, :phone, :email, :hidden, :city_id)
     end
 
     # Convert :page param to integer

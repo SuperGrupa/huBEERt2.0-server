@@ -17,10 +17,8 @@ class Seed
   private
 
     def cities
-      3.times do
-        City.create!(
-          name: Faker::Address.city
-        )
+      ['Poznań', 'Warszawa', 'Wrocław'].each do |city|
+        City.create!(name: city)
       end
     end
 
