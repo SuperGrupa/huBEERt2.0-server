@@ -6,15 +6,18 @@ class PubsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get pubs_url
+    get pubs_url, params: { page: 1, q: 'double' }
     assert_response :success
   end
 
   test "should create pub" do
+    city = cities(:one)
+
     assert_difference('Pub.count') do
       post pubs_url, params: {
         pub: {
-          description: @pub.description, email: 'abc@def.com', hidden: @pub.hidden, name: @pub.name, phone: @pub.phone
+          description: @pub.description, email: 'abc@def.com', hidden: @pub.hidden, name: @pub.name, phone: @pub.phone,
+          city_id: city.id
         }
       }
     end

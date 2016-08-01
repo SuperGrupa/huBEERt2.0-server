@@ -1,20 +1,22 @@
 class PubsController < ApplicationController
   before_action :set_pub, only: [:show, :update, :destroy]
+  before_action :sanitize_params, only: :index
 
-  # GET /pubs
+  PAGE_SIZE = 10
+
+  # GET /pubs?page[&q]
   def index
-    if params[:q]
-      @pubs = Pub.where("name ILIKE ?", "%#{params[:q]}%")
-    else
-      @pubs = Pub.all
-    end
+    @pubs = Pub.where("name ILIKE ?", "%#{params[:q]}%").includes(:comments)
+               .limit(PAGE_SIZE).offset((params[:page] - 1)*PAGE_SIZE)
 
-    render json: @pubs
+    @total_pubs = Pub.where("name ILIKE ?", "%#{params[:q]}%").count
+
+    render json: paginate(@pubs, @total_pubs)
   end
-  
+
   # GET /pubs/1
   def show
-    render json: @pub
+    render json: @pub.detail_info
   end
 
   # POST /pubs
@@ -51,5 +53,18 @@ class PubsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def pub_params
       params.require(:pub).permit(:name, :description, :phone, :email, :hidden)
+    end
+
+    # Convert :page param to integer
+    def sanitize_params
+      params.require([:q, :page])
+      params.permit(:q, :page)
+
+      params[:page] = params[:page].to_i
+    end
+
+    # Create hash ready for client-side pagination
+    def paginate(pubs, total_pubs)
+      { total_pubs: total_pubs, pubs: pubs.map { |pub| pub.general_info } }
     end
 end

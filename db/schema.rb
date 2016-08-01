@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160724202601) do
+ActiveRecord::Schema.define(version: 20160801184106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,12 @@ ActiveRecord::Schema.define(version: 20160724202601) do
     t.decimal  "volume"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "cities", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -85,7 +91,10 @@ ActiveRecord::Schema.define(version: 20160724202601) do
     t.boolean  "hidden"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "city_id"
   end
+
+  add_index "pubs", ["city_id"], name: "index_pubs_on_city_id", using: :btree
 
   create_table "subscriptions", force: :cascade do |t|
     t.integer  "user_id"
@@ -122,6 +131,7 @@ ActiveRecord::Schema.define(version: 20160724202601) do
   add_foreign_key "notifications", "events"
   add_foreign_key "offers", "beers"
   add_foreign_key "offers", "pubs"
+  add_foreign_key "pubs", "cities"
   add_foreign_key "subscriptions", "pubs"
   add_foreign_key "subscriptions", "users"
   add_foreign_key "tokens", "users"

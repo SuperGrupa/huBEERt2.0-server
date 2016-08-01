@@ -94,7 +94,7 @@ class Seed
         Random.rand(10).times do
           Event.create!(
             name: Faker::Lorem.sentence(3, false, 2).slice(0, 50),
-            date: Faker::Time.between(1.minute.from_now, 1.month.from_now).change(min: 0),
+            date: Faker::Time.between(1.hour.from_now, 1.month.from_now).change(min: 0),
             description: Faker::Lorem.paragraph.slice(0, 300),
             pub_id: pub.id
           )
