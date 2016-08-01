@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   end
 
   resources :beers, except: :destroy
+  resources :cities, only: :index
 end

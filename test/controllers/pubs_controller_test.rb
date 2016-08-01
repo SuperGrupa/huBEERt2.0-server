@@ -11,10 +11,13 @@ class PubsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create pub" do
+    city = cities(:one)
+
     assert_difference('Pub.count') do
       post pubs_url, params: {
         pub: {
-          description: @pub.description, email: 'abc@def.com', hidden: @pub.hidden, name: @pub.name, phone: @pub.phone
+          description: @pub.description, email: 'abc@def.com', hidden: @pub.hidden, name: @pub.name, phone: @pub.phone,
+          city_id: city.id
         }
       }
     end

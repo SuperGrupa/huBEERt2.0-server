@@ -16,7 +16,7 @@ class PubsController < ApplicationController
 
   # GET /pubs/1
   def show
-    render json: @pub
+    render json: @pub.detail_info
   end
 
   # POST /pubs
