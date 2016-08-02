@@ -85,7 +85,8 @@ class Seed
             text: Faker::Lorem.sentence.slice(0, 160),
             rating: Random.rand(5) + 1,
             pub_id: pub.id,
-            user_id: Random.rand(users_num - 1) + 1
+            user_id: Random.rand(users_num - 1) + 1,
+            created_at: Faker::Date.between(1.year.ago, Date.today)
           )
         end
       end
