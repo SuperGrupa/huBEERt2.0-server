@@ -39,18 +39,22 @@ class Seed
         "The Admiral's Arms", "The Alibi Room", "The Angler's Rest", "The Albert", "The Archer", "Archie Bunker's Place",
         "The Bloated Float Inn", "The Broken Drum", "The Clansman", "Double Deuce", "The Elephant", "The Flowing Bowl",
         "Grilby's", "Harry Hope's Saloon", "The Iron Horse", "John McRory's Place", "The King and Queen Tavern",
-        "Levy's", "The Lizard's Head", "The Midnight Star", "Night Shot", "The Old Pink Dog", "Los Pollos Hermanos"
+        "Levy's", "The Lizard's Head", "The Midnight Star", "Night Shot", "The Old Pink Dog", "Los Pollos Hermanos",
+        "Barley Mow", "Barrels", "Brewery Tap", "Hop Pole", "Sir John Barleycorn", "Three Tuns",
+        "Blue Door", "Olde Cheshire Cheese", "Haunch of Venison", "Shoulder of Mutton", "Oxnoble",
+        "Bierkeller", "Rai d'Or"
       ]
 
       City.all.each_with_index do |city, i|
-        7.times do |j|
-          name = fictional_names[i*j]
+        12.times do |j|
+          name = fictional_names[i*12 + j]
           Pub.create!(
             name: name,
             description: Faker::Lorem.paragraph.slice(0, 300),
             phone: Random.rand(899999999) + 100000000,
             email: Faker::Internet.email(name),
             hidden: Faker::Boolean.boolean(0.2),
+            address: Faker::Address.street_address,
             city_id: city.id
           )
         end

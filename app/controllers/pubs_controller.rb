@@ -4,14 +4,13 @@ class PubsController < ApplicationController
 
   PAGE_SIZE = 10
 
-  # GET /pubs?page[&q]
+  # GET /pubs?q&city&page
   def index
-    @pubs = Pub.where("name ILIKE ?", "%#{params[:q]}%").includes(:comments)
-               .limit(PAGE_SIZE).offset((params[:page] - 1)*PAGE_SIZE)
+    @pubs = Pub.includes(:comments)
+               .joins(:city)
+               .where("pubs.name ILIKE ? AND cities.name = ?", "%#{params[:q]}%", params[:city])
 
-    @total_pubs = Pub.where("name ILIKE ?", "%#{params[:q]}%").count
-
-    render json: paginate(@pubs, @total_pubs)
+    render json: paginate(@pubs)
   end
 
   # GET /pubs/1
@@ -57,14 +56,15 @@ class PubsController < ApplicationController
 
     # Convert :page param to integer
     def sanitize_params
-      params.require([:q, :page])
-      params.permit(:q, :page)
+      params.require([:q, :page, :city])
+      params.permit(:q, :page, :city)
 
       params[:page] = params[:page].to_i
     end
 
     # Create hash ready for client-side pagination
-    def paginate(pubs, total_pubs)
-      { total_pubs: total_pubs, pubs: pubs.map { |pub| pub.general_info } }
+    def paginate(pubs)
+      paginated_pubs = pubs.to_a.slice((params[:page] - 1)*PAGE_SIZE, PAGE_SIZE)
+      { total_pubs: pubs.length, pubs: paginated_pubs.map { |pub| pub.general_info } }
     end
 end
