@@ -83,7 +83,7 @@ class Seed
         Random.rand(10).times do
           Comment.create!(
             text: Faker::Lorem.sentence.slice(0, 160),
-            rating: Random.rand(5) + 1,
+            rating: Random.rand(4) + 2,
             pub_id: pub.id,
             user_id: Random.rand(users_num - 1) + 1,
             created_at: Faker::Date.between(1.year.ago, Date.today)

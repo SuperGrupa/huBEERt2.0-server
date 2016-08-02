@@ -1,11 +1,12 @@
 class OffersController < ApplicationController
   before_action :set_offer, only: [:show, :update, :destroy]
+  before_action :set_pub, only: [:index]
 
   # GET /offers
   def index
-    @offers = Offer.all
+    @offers = Offer.where(pub_id: @pub.id).includes(:beer)
 
-    render json: @offers
+    render json: @offers.map { |offer| offer.general_info }
   end
 
   # GET /offers/1
@@ -42,6 +43,10 @@ class OffersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_offer
       @offer = Offer.find(params[:id])
+    end
+
+    def set_pub
+      @pub = Pub.find(params[:pub_id])
     end
 
     # Only allow a trusted parameter "white list" through.
