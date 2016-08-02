@@ -25,6 +25,12 @@ class Pub < ApplicationRecord
   end
 
   def detail_info
-    self.general_info.merge(description: self.description, phone: self.phone, email: self.email)
+    self.general_info.merge(
+      description: self.description,
+      phone: self.phone,
+      email: self.email,
+      address: self.address,
+      city: self.city.name
+    )
   end
 end
