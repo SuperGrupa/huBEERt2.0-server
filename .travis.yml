@@ -20,5 +20,4 @@ deploy:
   on:
     repo: SuperGrupa/huBEERt2.0-server
   run:
-    - "rake db:migrate"
-    - "rake db:seed"
+    - "rake db:reset"
