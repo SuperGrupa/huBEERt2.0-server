@@ -12,4 +12,11 @@ class Beer < ApplicationRecord
   validates :volume,  presence: true,
                       numericality: { greater_than: 0.0 },
                       format: { with: /\A\d+\.\d+\z/ }
+
+  def detail_info
+    {
+      id: self.id, name: self.name, description: self.description,
+      volume: self.volume.to_f, alcohol: self.alcohol.to_f, extract: self.extract.to_f
+    }
+  end
 end

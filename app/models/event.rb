@@ -7,8 +7,8 @@ class Event < ApplicationRecord
   validates :description, presence: true, length: { maximum: 300 }
   validate :date_from_now
 
-  def general_info
-    { id: self.id, date: self.date, name: self.name }
+  def detail_info
+    { id: self.id, date: self.date, name: self.name, description: self.description }
   end
 
   private

@@ -4,9 +4,10 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    @events = Event.where(pub_id: @pub.id)
+    @events = Event.where("pub_id = :pub_id AND date > :now",
+                          { pub_id: @pub.id, now: Time.now })
 
-    render json: @events.map { |event| event.general_info }
+    render json: @events.map { |event| event.detail_info }
   end
 
   # GET /events/1

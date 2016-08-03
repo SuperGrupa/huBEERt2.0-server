@@ -26,7 +26,7 @@ class Seed
       20.times do
         Beer.create!(
           name: Faker::Beer.name.slice(0, 30),
-          description: Faker::Beer.style,
+          description: Faker::Lorem.paragraph(3).slice(0, 300),
           alcohol: '%.1f' % Random.rand(10.0),
           extract: '%.1f' % (Random.rand(25.0) + 0.1),
           volume:  (Random.rand(4) + 3)/10.0

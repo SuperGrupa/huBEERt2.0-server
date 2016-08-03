@@ -10,7 +10,7 @@ class BeersController < ApplicationController
 
   # GET /beers/1
   def show
-    render json: @beer
+    render json: @beer.detail_info
   end
 
   # POST /beers
