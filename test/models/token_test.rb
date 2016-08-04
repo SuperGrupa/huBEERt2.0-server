@@ -13,10 +13,10 @@ class TokenTest < ActiveSupport::TestCase
     @token.value = ""
     assert_not @token.valid?
 
-    @token.value = "a"*63
+    @token.value = "a"*127
     assert_not @token.valid?
 
-    @token.value = "a"*65
+    @token.value = "a"*129
     assert_not @token.valid?
   end
 

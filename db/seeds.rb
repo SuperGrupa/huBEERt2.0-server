@@ -144,7 +144,7 @@ class Seed
     def tokens
       User.all.each do |user|
         Token.create!(
-          value: (0...64).map { (65 + rand(26)).chr }.join,
+          value: (0...128).map { (65 + rand(26)).chr }.join,
           expire: Faker::Time.between(1.minute.from_now, 110.minutes.from_now),
           user_id: user.id
         )

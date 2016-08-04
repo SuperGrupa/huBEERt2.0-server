@@ -11,4 +11,8 @@ class User < ApplicationRecord
                     uniqueness: true
   validates :password, presence: true
   validates :salt, presence: true, length: { is: 64 }
+
+  def logged_info()
+    { id: self.id, login: self.login, token: self.token.value }
+  end
 end

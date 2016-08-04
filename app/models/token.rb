@@ -1,7 +1,7 @@
 class Token < ApplicationRecord
   belongs_to :user
 
-  validates :value, presence: true, length: { is: 64 }
+  validates :value, presence: true, length: { is: 128 }
   validates :expire, presence: true
   validate :expire_date
 

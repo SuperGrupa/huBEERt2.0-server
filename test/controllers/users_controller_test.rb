@@ -19,7 +19,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_difference('User.count') do
       post users_url, params: {
         user: {
-          email: unique[:email], login: unique[:login], password: @user.password, salt: @user.salt
+          email: unique[:email], login: unique[:login], password: @user.password
         }
       }
     end
@@ -35,7 +35,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "should update user" do
     patch user_url(@user), params: {
       user: {
-        email: @user.email, login: @user.login, password: @user.password, salt: @user.salt
+        email: @user.email, login: @user.login, password: @user.password
       }
     }
     assert_response 200

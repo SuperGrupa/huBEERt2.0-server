@@ -3,4 +3,4 @@
 one:
   user: one
   expire: <%= 10.minutes.from_now %>
-  value: <%= "a"*64 %>
+  value: <%= "a"*128 %>

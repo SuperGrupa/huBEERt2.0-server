@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
 
@@ -16,10 +18,13 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
+    @user.salt = SecureRandom.hex(32)
 
     if @user.save
-      render json: @user, status: :created, location: @user
+      @user.create_token(value: SecureRandom.hex(64), expire: 1.day.from_now)
+      render json: @user.logged_info, status: :created
     else
+      p @user.errors
       render json: @user.errors, status: :unprocessable_entity
     end
   end
@@ -46,6 +51,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:login, :email, :password, :salt)
+      params.require(:user).permit(:login, :email, :password)
     end
 end
