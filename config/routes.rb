@@ -6,11 +6,11 @@ Rails.application.routes.draw do
   end
 
   resources :users do
-    resources :tokens, only: [:create, :destroy]
     resources :notifications
     resources :subscriptions
   end
 
+  resources :tokens, only: [:create, :destroy]
   resources :beers, except: :destroy
   resources :cities, only: :index
 end

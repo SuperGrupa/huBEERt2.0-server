@@ -1,12 +1,19 @@
+require 'securerandom'
+
 class TokensController < ApplicationController
   before_action :set_token, only: :destroy
+  before_action :set_user, only: :create
 
   # POST /tokens
   def create
-    @token = Token.new(token_params)
+    unless @user.authenticate(params[:password])
+      render json: { password: 'jest nieprawidłowe '}, status: :unprocessable_entity and return
+    end
+
+    @token = @user.tokens.build(value: SecureRandom.hex(64), expire: 1.hour.from_now)
 
     if @token.save
-      render json: @token, status: :created, location: user_token_url(@token.user_id, @token)
+      render json: @user.logged_info(@token), status: :created
     else
       render json: @token.errors, status: :unprocessable_entity
     end
@@ -23,8 +30,14 @@ class TokensController < ApplicationController
       @token = Token.find(params[:id])
     end
 
+    # Find user based on received login
+    def set_user
+      @user = User.find_by(login: params[:login])
+      render json: { login: 'jest nieprawidłowy' }, status: :unprocessable_entity unless @user
+    end
+
     # Only allow a trusted parameter "white list" through.
     def token_params
-      params.require(:token).permit(:value, :expire, :user_id)
+      params.require(:login, :password).permit(:login, :password)
     end
 end

@@ -19,10 +19,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      @user.create_token(value: SecureRandom.hex(64), expire: 1.day.from_now)
-      render json: @user.logged_info, status: :created
+      token = @user.tokens.create!(value: SecureRandom.hex(64), expire: 1.hour.from_now)
+      render json: @user.logged_info(token), status: :created
     else
-      p @user.errors
       render json: @user.errors, status: :unprocessable_entity
     end
   end
@@ -49,6 +48,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:login, :email, :password)
+      params.permit(:login, :email, :password)
     end
 end
