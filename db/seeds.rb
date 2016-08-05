@@ -70,8 +70,7 @@ class Seed
         User.create!(
           login: login,
           email: Faker::Internet.email(login),
-          password: Faker::Internet.password,
-          salt: (0...64).map { (65 + rand(26)).chr }.join
+          password: Faker::Internet.password
         )
       end
     end

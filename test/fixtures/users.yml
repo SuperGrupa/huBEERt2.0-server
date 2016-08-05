@@ -4,4 +4,3 @@ one:
   login: bartas
   email: bartas@gmail.com
   password: abcdef
-  salt: <%= "a"*64 %>

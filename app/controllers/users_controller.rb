@@ -18,8 +18,6 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-    @user.salt = SecureRandom.hex(32)
-
     if @user.save
       @user.create_token(value: SecureRandom.hex(64), expire: 1.day.from_now)
       render json: @user.logged_info, status: :created
