@@ -71,7 +71,7 @@ class Seed
         User.create!(
           login: login,
           email: Faker::Internet.email(login),
-          password_digest: BCrypt::Password.create('qwerty')
+          password_digest: BCrypt::Password.create('qwertyuiop')
         )
       end
     end
