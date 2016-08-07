@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :users do
     resources :notifications
     resources :subscriptions
+    resources :comments, only: :index, controller: :user_comments
   end
 
   resources :tokens, only: [:create, :destroy]
