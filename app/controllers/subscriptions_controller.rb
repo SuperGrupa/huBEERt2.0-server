@@ -1,19 +1,19 @@
 class SubscriptionsController < ApplicationController
   before_action :set_subscription, only: [:show, :update, :destroy]
 
-  # GET /subscriptions
+  # GET /users/1/subscriptions
   def index
-    @subscriptions = Subscription.all
+    @subscriptions = Subscription.where(user_id: params[:user_id])
 
-    render json: @subscriptions
+    render json: @subscriptions.map { |sub| sub.info }
   end
 
-  # GET /subscriptions/1
+  # GET /users/1/subscriptions/1
   def show
     render json: @subscription
   end
 
-  # POST /subscriptions
+  # POST /users/1/subscriptions
   def create
     @subscription = Subscription.new(subscription_params)
 
@@ -24,7 +24,7 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /subscriptions/1
+  # PATCH/PUT /users/1/subscriptions/1
   def update
     if @subscription.update(subscription_params)
       render json: @subscription
@@ -33,7 +33,7 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-  # DELETE /subscriptions/1
+  # DELETE /users/1/subscriptions/1
   def destroy
     @subscription.destroy
   end

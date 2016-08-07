@@ -21,7 +21,11 @@ class Pub < ApplicationRecord
   end
 
   def general_info
-    { id: self.id, name: self.name, rating: self.rating, comments: self.comments.length, events: self.events.length }
+    {
+      id: self.id, name: self.name, rating: self.rating,
+      comments: self.comments.length, events: self.events.length,
+      address: self.address
+    }
   end
 
   def detail_info
