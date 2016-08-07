@@ -15,4 +15,8 @@ class User < ApplicationRecord
   def logged_info(token)
     { id: self.id, login: self.login, token: token.value }
   end
+
+  def general_info
+    { id: self.id, comments: self.comments.length, subscriptions: self.subscriptions.length }
+  end
 end

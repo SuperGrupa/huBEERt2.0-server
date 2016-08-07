@@ -3,7 +3,7 @@ class UserCommentsController < ApplicationController
 
   # GET /users/:user_id/comments
   def index
-    render json: @user.comments
+    render json: @user.comments.map { |comment| comment.general_info }
   end
 
   private

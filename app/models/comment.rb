@@ -6,6 +6,8 @@ class Comment < ApplicationRecord
   validates :rating, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 5 }
 
   def general_info
-    { author: self.user.login, date: self.created_at, text: self.text, rating: self.rating }
+    { author: self.user.login, date: self.created_at, text: self.text, rating: self.rating,
+      pub: self.pub.name
+    }
   end
 end
