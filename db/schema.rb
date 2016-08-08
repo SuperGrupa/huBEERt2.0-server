@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805170501) do
+ActiveRecord::Schema.define(version: 20160808171432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,17 +60,12 @@ ActiveRecord::Schema.define(version: 20160805170501) do
     t.string   "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean  "read"
+    t.integer  "user_id"
   end
 
   add_index "notifications", ["event_id"], name: "index_notifications_on_event_id", using: :btree
-
-  create_table "notifications_users", id: false, force: :cascade do |t|
-    t.integer "notification_id", null: false
-    t.integer "user_id",         null: false
-  end
-
-  add_index "notifications_users", ["notification_id", "user_id"], name: "index_notifications_users_on_notification_id_and_user_id", using: :btree
-  add_index "notifications_users", ["user_id", "notification_id"], name: "index_notifications_users_on_user_id_and_notification_id", using: :btree
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "offers", force: :cascade do |t|
     t.integer  "pub_id"
@@ -129,6 +124,7 @@ ActiveRecord::Schema.define(version: 20160805170501) do
   add_foreign_key "comments", "users"
   add_foreign_key "events", "pubs"
   add_foreign_key "notifications", "events"
+  add_foreign_key "notifications", "users"
   add_foreign_key "offers", "beers"
   add_foreign_key "offers", "pubs"
   add_foreign_key "pubs", "cities"

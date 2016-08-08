@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   end
 
   resources :users do
-    resources :notifications
+    resources :notifications, only: [:index, :update]
     resources :subscriptions
     resources :comments, only: :index, controller: :user_comments
   end

@@ -130,13 +130,13 @@ class Seed
 
     def notifications
       Event.all.each do |event|
-        notification = Notification.create!(
-          message: Faker::Lorem.sentence.slice(0, 160),
-          event_id: event.id
-        )
-
-        notification.event.pub.subscriptions.each do |s|
-          User.find(s.user_id).notifications << notification
+        event.pub.subscriptions.each do |sub|
+          Notification.create!(
+            user_id: sub.user_id,
+            event_id: event.id,
+            message: Faker::Lorem.sentence.slice(0, 160),
+            read: false
+          )
         end
       end
     end

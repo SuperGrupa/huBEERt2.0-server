@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   belongs_to :pub
-  has_one :notification, dependent: :destroy
+  has_many :users, through: :notifications
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :date, presence: true

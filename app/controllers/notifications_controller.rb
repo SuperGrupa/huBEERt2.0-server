@@ -1,30 +1,15 @@
 class NotificationsController < ApplicationController
-  before_action :set_notification, only: [:show, :update, :destroy]
+  before_action :set_notification, only: :update
+  before_action :set_user
 
-  # GET /notifications
+  # GET /users/:user_id/notifications
   def index
-    @notifications = Notification.all
+    @notifications = Notification.where("user_id = ? AND read = false", params[:user_id])
 
-    render json: @notifications
+    render json: @notifications.map { |notify| notify.info }
   end
 
-  # GET /notifications/1
-  def show
-    render json: @notification
-  end
-
-  # POST /notifications
-  def create
-    @notification = Notification.new(notification_params)
-
-    if @notification.save
-      render json: @notification, status: :created
-    else
-      render json: @notification.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /notifications/1
+  # PATCH/PUT /users/:user_id/notifications/1
   def update
     if @notification.update(notification_params)
       render json: @notification
@@ -33,15 +18,15 @@ class NotificationsController < ApplicationController
     end
   end
 
-  # DELETE /notifications/1
-  def destroy
-    @notification.destroy
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_notification
       @notification = Notification.find(params[:id])
+    end
+
+    # Set user who requests the notifications
+    def set_user
+      @user = User.find(params[:user_id])
     end
 
     # Only allow a trusted parameter "white list" through.
