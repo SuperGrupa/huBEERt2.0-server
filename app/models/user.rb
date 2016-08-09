@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
 
+  has_many :notifications
   has_many :events, through: :notifications
   has_many :comments, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
@@ -24,6 +25,18 @@ class User < ApplicationRecord
   end
 
   def general_info
-    { id: self.id, comments: self.comments.length, subscriptions: self.subscriptions.length }
+    {
+      id: self.id,
+      comments: self.comments.length,
+      subscriptions: self.subscriptions.length,
+      notifications: unread_notifications
+    }
   end
+
+  private
+
+    def unread_notifications
+      self.notifications.select { |n| n.read === false }
+          .length
+    end
 end

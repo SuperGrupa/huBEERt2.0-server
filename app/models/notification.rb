@@ -7,7 +7,7 @@ class Notification < ApplicationRecord
   def info
     pub = self.event.pub
     {
-      id: self.id
+      id: self.id,
       event: {
         id: self.event.id,
         name: self.event.name,
