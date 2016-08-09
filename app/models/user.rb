@@ -13,7 +13,14 @@ class User < ApplicationRecord
                     uniqueness: true
 
   def logged_info(token)
-    { id: self.id, login: self.login, token: token.value }
+    {
+      id: self.id,
+      login: self.login,
+      token: {
+        id: token.id,
+        value: token.value
+      }
+    }
   end
 
   def general_info
