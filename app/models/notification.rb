@@ -6,7 +6,8 @@ class Notification < ApplicationRecord
 
   def info
     pub = self.event.pub
-    { 
+    {
+      id: self.id
       event: {
         id: self.event.id,
         name: self.event.name,
@@ -18,7 +19,8 @@ class Notification < ApplicationRecord
         name: pub.name,
         address: pub.address,
         city: pub.city.name
-      }
+      },
+      read: self.read
     }
   end
 end
