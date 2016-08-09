@@ -4,3 +4,4 @@ one:
   event: one
   user: one
   message: MyString
+  read: false

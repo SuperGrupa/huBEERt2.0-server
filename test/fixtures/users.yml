@@ -4,3 +4,4 @@ one:
   login: bartas
   email: bartas@gmail.com
   password_digest: <%= BCrypt::Password.create('qwerty') %>
+  city: one

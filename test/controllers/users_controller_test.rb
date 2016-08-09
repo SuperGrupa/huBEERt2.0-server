@@ -3,6 +3,7 @@ require 'test_helper'
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)
+    @city = cities(:one)
   end
 
   test "should get index" do
@@ -18,7 +19,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference('User.count') do
       post users_url, params: {
-        email: unique[:email], login: unique[:login], password: 'qwerty'
+        email: unique[:email], login: unique[:login], password: 'qwerty',
+        city_id: @city.id
       }
     end
 

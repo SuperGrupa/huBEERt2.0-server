@@ -3,6 +3,7 @@ class Notification < ApplicationRecord
   belongs_to :user
 
   validates :message, presence: true, length: { maximum: 160 }
+  validates :read, inclusion: { in: [ true, false ] }
 
   def info
     pub = self.event.pub
