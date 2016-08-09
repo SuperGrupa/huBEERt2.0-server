@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
 
-  has_many :notifications
+  has_many :notifications, dependent: :destroy
   has_many :events, through: :notifications
   has_many :comments, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
