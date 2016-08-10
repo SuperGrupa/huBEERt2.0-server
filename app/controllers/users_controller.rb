@@ -1,6 +1,7 @@
 require 'securerandom'
 
 class UsersController < ApplicationController
+  wrap_parameters :user, include: [:login, :email, :password, :city_id]
   before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /users
@@ -22,6 +23,7 @@ class UsersController < ApplicationController
       token = @user.tokens.create!(value: SecureRandom.hex(64), expire: 1.hour.from_now)
       render json: @user.logged_info(token), status: :created
     else
+      p @user.errors
       render json: @user.errors, status: :unprocessable_entity
     end
   end
@@ -37,6 +39,7 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
+    render json: @user.general_info
     @user.destroy
   end
 
@@ -48,6 +51,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.permit(:login, :email, :password, :city_id)
+      params.require(:user).permit(:login, :email, :password, :city_id)
     end
 end

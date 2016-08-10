@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
 
+  after_initialize :default_city
+
   belongs_to :city
   has_many :notifications, dependent: :destroy
   has_many :events, through: :notifications
@@ -45,5 +47,9 @@ class User < ApplicationRecord
     def unread_notifications
       self.notifications.select { |n| n.read === false }
           .length
+    end
+
+    def default_city
+      self.city_id = City.first.id if self.city_id.nil?
     end
 end
