@@ -28,6 +28,12 @@ class User < ApplicationRecord
   def general_info
     {
       id: self.id,
+      login: self.login,
+      email: self.email,
+      city: {
+        id: self.city.id,
+        name: self.city.name
+      },
       comments: self.comments.length,
       subscriptions: self.subscriptions.length,
       notifications: unread_notifications

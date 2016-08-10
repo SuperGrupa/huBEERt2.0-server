@@ -71,6 +71,7 @@ class Seed
         User.create!(
           login: login,
           email: Faker::Internet.email(login),
+          city_id: City.order("RANDOM()").first.id,
           password_digest: BCrypt::Password.create('qwertyuiop')
         )
       end
