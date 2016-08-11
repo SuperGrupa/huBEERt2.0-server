@@ -1,13 +1,6 @@
 class BeersController < ApplicationController
   before_action :set_beer, only: [:show, :update]
 
-  # GET /beers
-  def index
-    @beers = Beer.all
-
-    render json: @beers
-  end
-
   # GET /beers/1
   def show
     render json: @beer.detail_info

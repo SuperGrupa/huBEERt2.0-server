@@ -4,13 +4,6 @@ class UsersController < ApplicationController
   wrap_parameters :user, include: [:login, :email, :password, :city_id]
   before_action :set_user, :authenticate_by_token, only: [:show, :update, :destroy]
 
-  # GET /users
-  def index
-    @users = User.all
-
-    render json: @users
-  end
-
   # GET /users/1
   def show
     render json: @user.general_info

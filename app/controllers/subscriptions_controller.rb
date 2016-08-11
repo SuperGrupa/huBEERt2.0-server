@@ -1,5 +1,5 @@
 class SubscriptionsController < ApplicationController
-  before_action :set_subscription, only: [:show, :update, :destroy]
+  before_action :set_subscription, only: :destroy
   before_action :set_user, only: :index
   before_action :authenticate_by_token, only: [:index, :destroy]
 
@@ -10,26 +10,12 @@ class SubscriptionsController < ApplicationController
     render json: @subscriptions.map { |sub| sub.info }
   end
 
-  # GET /users/1/subscriptions/1
-  def show
-    render json: @subscription
-  end
-
   # POST /users/1/subscriptions
   def create
     @subscription = Subscription.new(subscription_params)
 
     if @subscription.save
       render json: @subscription, status: :created, location: user_subscription_url(@subscription.user_id, @subscription)
-    else
-      render json: @subscription.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /users/1/subscriptions/1
-  def update
-    if @subscription.update(subscription_params)
-      render json: @subscription
     else
       render json: @subscription.errors, status: :unprocessable_entity
     end

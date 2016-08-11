@@ -1,17 +1,12 @@
 class OffersController < ApplicationController
-  before_action :set_offer, only: [:show, :update, :destroy]
-  before_action :set_pub, only: [:index]
+  before_action :set_offer, only: [:update, :destroy]
+  before_action :set_pub, only: :index
 
   # GET /offers
   def index
     @offers = Offer.where(pub_id: @pub.id).includes(:beer)
 
     render json: @offers.map { |offer| offer.general_info }
-  end
-
-  # GET /offers/1
-  def show
-    render json: @offer
   end
 
   # POST /offers
