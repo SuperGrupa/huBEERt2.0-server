@@ -1,6 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+janusz:
+  login: janusz
+  email: janusz@pudelek.pl
+  password_digest: <%= BCrypt::Password.create('qwerty') %>
+  city: one
+
 one:
   login: bartas
   email: bartas@gmail.com
   password_digest: <%= BCrypt::Password.create('qwerty') %>
+  city: one

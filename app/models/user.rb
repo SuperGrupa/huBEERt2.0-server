@@ -1,7 +1,11 @@
 class User < ApplicationRecord
   has_secure_password
 
-  has_and_belongs_to_many :notifications
+  after_initialize :default_city
+
+  belongs_to :city
+  has_many :notifications, dependent: :destroy
+  has_many :events, through: :notifications
   has_many :comments, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
   has_many :tokens, dependent: :destroy
@@ -22,4 +26,30 @@ class User < ApplicationRecord
       }
     }
   end
+
+  def general_info
+    {
+      id: self.id,
+      login: self.login,
+      email: self.email,
+      city: {
+        id: self.city.id,
+        name: self.city.name
+      },
+      comments: self.comments.length,
+      subscriptions: self.subscriptions.length,
+      notifications: unread_notifications
+    }
+  end
+
+  private
+
+    def unread_notifications
+      self.notifications.select { |n| n.read === false }
+          .length
+    end
+
+    def default_city
+      self.city_id = City.first.id if self.city_id.nil?
+    end
 end

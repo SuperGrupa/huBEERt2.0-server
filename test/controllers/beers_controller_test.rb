@@ -5,11 +5,6 @@ class BeersControllerTest < ActionDispatch::IntegrationTest
     @beer = beers(:pils)
   end
 
-  test "should get index" do
-    get beers_url
-    assert_response :success
-  end
-
   test "should create beer" do
     assert_difference('Beer.count') do
       post beers_url, params: { beer: { alcohol: @beer.alcohol, description: @beer.description, extract: @beer.extract, name: @beer.name, volume: @beer.volume } }
