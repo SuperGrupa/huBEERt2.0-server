@@ -1,6 +1,6 @@
 class SubscriptionsController < ApplicationController
   before_action :set_subscription, only: :destroy
-  before_action :set_user, only: :index
+  before_action :set_user, only: [:index, :destroy]
   before_action :authenticate_by_token, only: [:index, :create, :destroy]
 
   # GET /users/1/subscriptions
@@ -24,6 +24,7 @@ class SubscriptionsController < ApplicationController
   # DELETE /users/1/subscriptions/1
   def destroy
     @subscription.destroy
+    render json: @user.subscriptions.map { |sub| sub.info }
   end
 
   private
