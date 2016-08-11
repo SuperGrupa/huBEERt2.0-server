@@ -1,7 +1,7 @@
 class SubscriptionsController < ApplicationController
   before_action :set_subscription, only: :destroy
   before_action :set_user, only: :index
-  before_action :authenticate_by_token, only: [:index, :destroy]
+  before_action :authenticate_by_token, only: [:index, :create, :destroy]
 
   # GET /users/1/subscriptions
   def index
