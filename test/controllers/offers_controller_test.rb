@@ -22,11 +22,6 @@ class OffersControllerTest < ActionDispatch::IntegrationTest
     assert_response 201
   end
 
-  test "should show offer" do
-    get pub_offer_url(@offer.pub_id, @offer)
-    assert_response :success
-  end
-
   test "should update offer" do
     patch pub_offer_url(@offer.pub_id, @offer), params: {
       offer: {

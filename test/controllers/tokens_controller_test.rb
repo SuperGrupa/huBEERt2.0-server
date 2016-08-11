@@ -2,8 +2,8 @@ require 'test_helper'
 
 class TokensControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @token = tokens(:one)
-    @user = users(:one)
+    @token = tokens(:super)
+    @user = users(:janusz)
   end
 
   test "should create token" do
@@ -19,7 +19,7 @@ class TokensControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy token" do
     assert_difference('Token.count', -1) do
-      delete token_url(@token)
+      delete token_url(@token), params: authorizing_params(@user)
     end
 
     assert_response 204

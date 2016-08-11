@@ -7,4 +7,7 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def authorizing_params(user)
+    { login: user.login, token: user.tokens.first.value }
+  end
 end

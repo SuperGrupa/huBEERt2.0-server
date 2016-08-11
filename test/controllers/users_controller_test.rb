@@ -2,13 +2,8 @@ require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:one)
+    @user = users(:janusz)
     @city = cities(:one)
-  end
-
-  test "should get index" do
-    get users_url
-    assert_response :success
   end
 
   test "should create user" do
@@ -19,8 +14,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference('User.count') do
       post users_url, params: {
-        email: unique[:email], login: unique[:login], password: 'qwerty',
-        city_id: @city.id
+        user: {
+          email: unique[:email], login: unique[:login], password: 'qwerty',
+        }
       }
     end
 
@@ -28,24 +24,24 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show user" do
-    get user_url(@user)
+    get user_url(@user), params: authorizing_params(@user)
     assert_response :success
   end
 
   test "should update user" do
-    patch user_url(@user), params: {
+    put user_url(@user), params: authorizing_params(@user).merge(
       user: {
-        email: @user.email, login: @user.login, password: @user.password
+        email: @user.email, login: @user.login, city_id: @city.id
       }
-    }
+    )
     assert_response 200
   end
 
   test "should destroy user" do
     assert_difference('User.count', -1) do
-      delete user_url(@user)
+      delete user_url(@user), params: authorizing_params(@user)
     end
 
-    assert_response 204
+    assert_response 200
   end
 end
