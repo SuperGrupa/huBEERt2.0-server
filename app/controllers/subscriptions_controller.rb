@@ -1,9 +1,11 @@
 class SubscriptionsController < ApplicationController
   before_action :set_subscription, only: [:show, :update, :destroy]
+  before_action :set_user, only: :index
+  before_action :authenticate_by_token, only: [:index, :destroy]
 
   # GET /users/1/subscriptions
   def index
-    @subscriptions = Subscription.where(user_id: params[:user_id])
+    @subscriptions = Subscription.where(user_id: @user.id)
 
     render json: @subscriptions.map { |sub| sub.info }
   end
@@ -42,6 +44,10 @@ class SubscriptionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_subscription
       @subscription = Subscription.find(params[:id])
+    end
+
+    def set_user
+      @user = User.find(params[:user_id])
     end
 
     # Only allow a trusted parameter "white list" through.

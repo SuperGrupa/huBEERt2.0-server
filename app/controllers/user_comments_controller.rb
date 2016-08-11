@@ -1,5 +1,5 @@
 class UserCommentsController < ApplicationController
-  before_action :set_user, only: :index
+  before_action :set_user, :authenticate_by_token, only: :index
 
   # GET /users/:user_id/comments
   def index

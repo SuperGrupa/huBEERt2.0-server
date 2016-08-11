@@ -1,10 +1,11 @@
 class NotificationsController < ApplicationController
   before_action :set_notification, only: :update
-  before_action :set_user
+  before_action :set_user, only: :index
+  before_action :authenticate_by_token
 
   # GET /users/:user_id/notifications
   def index
-    @notifications = Notification.where("user_id = ? AND read = false", params[:user_id])
+    @notifications = Notification.where("user_id = ? AND read = false", @user.id)
 
     render json: @notifications.map { |notify| notify.info }
   end

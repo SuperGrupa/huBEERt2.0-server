@@ -2,7 +2,7 @@ require 'securerandom'
 
 class UsersController < ApplicationController
   wrap_parameters :user, include: [:login, :email, :password, :city_id]
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, :authenticate_by_token, only: [:show, :update, :destroy]
 
   # GET /users
   def index
