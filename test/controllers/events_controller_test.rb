@@ -22,11 +22,6 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
     assert_response 201
   end
 
-  test "should show event" do
-    get pub_event_url(@event.pub_id, @event)
-    assert_response :success
-  end
-
   test "should update event" do
     patch pub_event_url(@event.pub_id, @event), params: {
       event: {

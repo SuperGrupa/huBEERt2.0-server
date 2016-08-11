@@ -17,6 +17,11 @@ class NotificationTest < ActiveSupport::TestCase
     assert_not @notification.valid?
   end
 
+  test "read property should be boolean" do
+    @notification.read = nil
+    assert_not @notification.valid?
+  end
+
   test "notification from fixture should be valid" do
     assert @notification.valid?
   end

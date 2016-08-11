@@ -21,7 +21,11 @@ class Pub < ApplicationRecord
   end
 
   def general_info
-    { id: self.id, name: self.name, rating: self.rating, comments: self.comments.length, events: self.events.length }
+    {
+      id: self.id, name: self.name, rating: self.rating,
+      comments: self.comments.length, events: upcoming_events,
+      address: self.address
+    }
   end
 
   def detail_info
@@ -33,4 +37,11 @@ class Pub < ApplicationRecord
       city: self.city.name
     )
   end
+
+  private
+
+    def upcoming_events
+      self.events.select { |ev| ev.date > Time.now }
+          .length
+    end
 end

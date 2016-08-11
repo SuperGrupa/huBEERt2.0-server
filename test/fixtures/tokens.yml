@@ -1,6 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+super:
+  user: janusz
+  expire: <%= 10.minutes.from_now %>
+  value: <%= "j"*128 %>
+
 one:
   user: one
   expire: <%= 10.minutes.from_now %>
-  value: <%= "a"*64 %>
+  value: <%= "a"*128 %>

@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :update]
-  before_action :set_pub, only: [:index]
+  before_action :set_event, only: :update
+  before_action :set_pub, only: :index
 
   # GET /events
   def index
@@ -8,11 +8,6 @@ class EventsController < ApplicationController
                           { pub_id: @pub.id, now: Time.now })
 
     render json: @events.map { |event| event.detail_info }
-  end
-
-  # GET /events/1
-  def show
-    render json: @event
   end
 
   # POST /events

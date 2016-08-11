@@ -5,6 +5,7 @@ gem 'pg', '~> 0.18.4'                                           # Database
 gem 'puma'                                                      # App server
 gem 'rack-cors', :require => 'rack/cors'
 gem 'faker', '1.6.3'
+gem 'bcrypt', '~> 3.1', '>= 3.1.11'
 
 group :development, :test do
   gem 'byebug'                                                  # Debug console in dev and test mode

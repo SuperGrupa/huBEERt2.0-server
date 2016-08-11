@@ -8,7 +8,8 @@ class PubsController < ApplicationController
   def index
     @pubs = Pub.includes(:comments)
                .joins(:city)
-               .where("pubs.name ILIKE ? AND cities.name = ?", "%#{params[:q]}%", params[:city])
+               .where("pubs.name ILIKE ? AND cities.name = ? AND hidden = false",
+                       "%#{params[:q]}%", params[:city])
 
     render json: paginate(@pubs)
   end

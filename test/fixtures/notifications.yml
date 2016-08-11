@@ -2,8 +2,6 @@
 
 one:
   event: one
+  user: one
   message: MyString
-
-two:
-  event: two
-  message: MyString
+  read: false

@@ -1,3 +1,5 @@
+require 'bcrypt'
+
 class Seed
   def run
     cities
@@ -11,7 +13,6 @@ class Seed
 
     subscriptions
     notifications
-    tokens
   end
 
   private
@@ -70,8 +71,8 @@ class Seed
         User.create!(
           login: login,
           email: Faker::Internet.email(login),
-          password: Faker::Internet.password,
-          salt: (0...64).map { (65 + rand(26)).chr }.join
+          city_id: City.order("RANDOM()").first.id,
+          password_digest: BCrypt::Password.create('qwertyuiop')
         )
       end
     end
@@ -130,24 +131,14 @@ class Seed
 
     def notifications
       Event.all.each do |event|
-        notification = Notification.create!(
-          message: Faker::Lorem.sentence.slice(0, 160),
-          event_id: event.id
-        )
-
-        notification.event.pub.subscriptions.each do |s|
-          User.find(s.user_id).notifications << notification
+        event.pub.subscriptions.each do |sub|
+          Notification.create!(
+            user_id: sub.user_id,
+            event_id: event.id,
+            message: Faker::Lorem.sentence.slice(0, 160),
+            read: false
+          )
         end
-      end
-    end
-
-    def tokens
-      User.all.each do |user|
-        Token.create!(
-          value: (0...64).map { (65 + rand(26)).chr }.join,
-          expire: Faker::Time.between(1.minute.from_now, 110.minutes.from_now),
-          user_id: user.id
-        )
       end
     end
 

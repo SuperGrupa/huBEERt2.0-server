@@ -1,16 +1,17 @@
 Rails.application.routes.draw do
   resources :pubs do
-    resources :events, except: :destroy
-    resources :offers
-    resources :comments
+    resources :events, except: [:show, :destroy]
+    resources :offers, except: :show
+    resources :comments, only: [:index, :create]
   end
 
-  resources :users do
-    resources :tokens, only: [:create, :destroy]
-    resources :notifications
-    resources :subscriptions
+  resources :users, except: :index do
+    resources :notifications, only: [:index, :update]
+    resources :subscriptions, except: [:show, :update]
+    resources :comments, only: :index, controller: :user_comments
   end
 
-  resources :beers, except: :destroy
+  resources :tokens, only: [:create, :destroy]
+  resources :beers, except: [:index, :destroy]
   resources :cities, only: :index
 end
