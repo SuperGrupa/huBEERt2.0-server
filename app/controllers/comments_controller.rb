@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_pub, only: :index
+  before_action :authenticate_by_token, only: :create
 
   # GET /comments
   def index
