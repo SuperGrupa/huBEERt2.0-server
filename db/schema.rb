@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160809160516) do
+ActiveRecord::Schema.define(version: 20160812131009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,12 +116,15 @@ ActiveRecord::Schema.define(version: 20160809160516) do
     t.string   "login"
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "city_id"
+    t.string   "role",            default: "user"
+    t.integer  "pub_id"
   end
 
   add_index "users", ["city_id"], name: "index_users_on_city_id", using: :btree
+  add_index "users", ["pub_id"], name: "index_users_on_pub_id", using: :btree
 
   add_foreign_key "comments", "pubs"
   add_foreign_key "comments", "users"
@@ -135,4 +138,5 @@ ActiveRecord::Schema.define(version: 20160809160516) do
   add_foreign_key "subscriptions", "users"
   add_foreign_key "tokens", "users"
   add_foreign_key "users", "cities"
+  add_foreign_key "users", "pubs"
 end

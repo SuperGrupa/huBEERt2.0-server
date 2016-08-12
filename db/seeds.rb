@@ -65,14 +65,27 @@ class Seed
     def users
       logins_taken = Set.new
 
-      20.times do
+      10.times do
         login = choose_login(logins_taken)
         logins_taken << login
         User.create!(
           login: login,
           email: Faker::Internet.email(login),
           city_id: City.order("RANDOM()").first.id,
-          password_digest: BCrypt::Password.create('qwertyuiop')
+          password_digest: BCrypt::Password.create('qwertyuiop'),
+        )
+      end
+
+      3.times do |n|
+        login = choose_login(logins_taken)
+        logins_taken << login
+        User.create!(
+          login: login,
+          email: Faker::Internet.email(login),
+          city_id: City.order("RANDOM()").first.id,
+          password_digest: BCrypt::Password.create('qwertyuiop'),
+          role: 'pub-owner',
+          pub_id: Pub.all.offset(n).limit(1).first.id
         )
       end
     end
