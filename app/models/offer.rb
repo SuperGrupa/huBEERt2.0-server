@@ -7,6 +7,14 @@ class Offer < ApplicationRecord
                     format: { with: /\A\d+\.\d+\z/ }
 
   def general_info
-    { beer: { id: self.beer.id, name: self.beer.name, volume: self.beer.volume }, value: self.value.to_f }
+    {
+      id: self.id,
+      beer: {
+        id: self.beer.id,
+        name: self.beer.name,
+        volume: self.beer.volume
+      },
+      value: self.value.to_f
+    }
   end
 end

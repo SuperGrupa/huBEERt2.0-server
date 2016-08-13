@@ -36,6 +36,6 @@ class OffersControllerTest < ActionDispatch::IntegrationTest
       delete pub_offer_url(@offer.pub_id, @offer)
     end
 
-    assert_response 204
+    assert_response 200
   end
 end

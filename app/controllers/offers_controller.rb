@@ -1,12 +1,17 @@
 class OffersController < ApplicationController
-  before_action :set_offer, only: [:update, :destroy]
+  before_action :set_offer, only: [:show, :update, :destroy]
   before_action :set_pub, only: :index
 
-  # GET /offers
+  # GET /pub/:pub_id/offers
   def index
     @offers = Offer.where(pub_id: @pub.id).includes(:beer)
 
     render json: @offers.map { |offer| offer.general_info }
+  end
+
+  # GET /pub/:pub_id/offers/:offer_id
+  def show
+    render json: @offer.general_info
   end
 
   # POST /offers
@@ -20,7 +25,7 @@ class OffersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /offers/1
+  # PATCH/PUT /pub/:pub_id/offers/:offer_id
   def update
     if @offer.update(offer_params)
       render json: @offer
@@ -29,8 +34,9 @@ class OffersController < ApplicationController
     end
   end
 
-  # DELETE /offers/1
+  # DELETE /pub/:pub_id/offers/:offer_id
   def destroy
+    render json: @offer.general_info
     @offer.destroy
   end
 

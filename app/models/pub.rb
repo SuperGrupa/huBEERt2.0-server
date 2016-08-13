@@ -22,8 +22,10 @@ class Pub < ApplicationRecord
 
   def general_info
     {
-      id: self.id, name: self.name, rating: self.rating,
-      comments: self.comments.length, events: upcoming_events,
+      id: self.id,
+      name: self.name,
+      rating: self.rating,
+      comments: self.comments.length,
       address: self.address
     }
   end
@@ -33,8 +35,9 @@ class Pub < ApplicationRecord
       description: self.description,
       phone: self.phone,
       email: self.email,
-      address: self.address,
-      city: self.city.name
+      city: self.city.name,
+      events: upcoming_events,
+      offers: self.offers.length
     )
   end
 
