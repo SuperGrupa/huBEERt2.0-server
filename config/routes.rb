@@ -12,6 +12,6 @@ Rails.application.routes.draw do
   end
 
   resources :tokens, only: [:create, :destroy]
-  resources :beers, except: [:index, :destroy]
+  resources :beers, except: :destroy
   resources :cities, only: :index
 end

@@ -13,6 +13,14 @@ class Beer < ApplicationRecord
                       numericality: { greater_than: 0.0 },
                       format: { with: /\A\d+\.\d+\z/ }
 
+  def general_info
+    {
+      id: self.id,
+      name: self.name,
+      volume: self.volume
+    }
+  end
+
   def detail_info
     {
       id: self.id, name: self.name, description: self.description,

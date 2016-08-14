@@ -22,6 +22,8 @@ class User < ApplicationRecord
     {
       id: self.id,
       login: self.login,
+      role: self.role,
+      pub_id: self.pub_id,
       token: {
         id: token.id,
         value: token.value

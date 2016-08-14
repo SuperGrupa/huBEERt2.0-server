@@ -1,6 +1,7 @@
 class OffersController < ApplicationController
   before_action :set_offer, only: [:show, :update, :destroy]
   before_action :set_pub, only: :index
+  before_action :authenticate_by_token, except: :index
 
   # GET /pub/:pub_id/offers
   def index
