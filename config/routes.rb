@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :pubs do
-    resources :events, except: [:show, :destroy]
+    resources :events, except: :destroy
     resources :offers
     resources :comments, only: [:index, :create]
   end
