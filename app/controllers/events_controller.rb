@@ -19,6 +19,7 @@ class EventsController < ApplicationController
   # POST /pubs/:pub_id/events
   def create
     @event = @pub.events.create!(event_params)
+    @pub.subscribers.each { |user| @event.notify(user) }
 
     if @event.save
       render json: @event, status: :created

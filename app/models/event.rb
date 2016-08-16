@@ -18,6 +18,14 @@ class Event < ApplicationRecord
     }
   end
 
+  def notify(user)
+    user.notifications.create(
+      message: 'Nowe wydarzenie w zasubskrybowanym pubie!',
+      event_id: self.id,
+      read: false
+    )
+  end
+
   private
 
     def date_from_now

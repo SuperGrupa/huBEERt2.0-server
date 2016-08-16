@@ -20,6 +20,10 @@ class Pub < ApplicationRecord
     (stars.to_f / self.comments.length).round(1)
   end
 
+  def subscribers
+    User.where(id: subscriptions.map { |sub| sub.user_id })
+  end
+
   def general_info
     {
       id: self.id,
