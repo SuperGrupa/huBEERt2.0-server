@@ -1,7 +1,8 @@
 class PubsController < ApplicationController
   before_action :set_pub, only: [:show, :update, :destroy]
   before_action :sanitize_params, only: :index
-  before_action :authenticate_by_token, except: [:index, :show]
+  before_action :authenticate_by_token, -> { authorize(['pub-owner', 'admin']) }, only: :update
+  before_action :authenticate_by_token, -> { authorize(['admin']) }, only: [:create, :destroy]
 
   PAGE_SIZE = 10
 

@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :update]
   before_action :set_pub, only: [:index, :create]
-  before_action :authenticate_by_token, except: :index
+  before_action :authenticate_by_token, -> { authorize(['pub-owner', 'admin']) }, except: :index
 
   # GET /pubs/:pub_id/events
   def index

@@ -65,7 +65,7 @@ class Seed
     def users
       logins_taken = Set.new
 
-      10.times do
+      9.times do
         login = choose_login(logins_taken)
         logins_taken << login
         User.create!(
@@ -88,6 +88,14 @@ class Seed
           pub_id: Pub.all.offset(n).limit(1).first.id
         )
       end
+
+      User.create!(
+        login: 'admin',
+        email: Faker::Internet.email('admin'),
+        city_id: City.order("RANDOM()").first.id,
+        password_digest: BCrypt::Password.create('admin1'),
+        role: 'admin'
+      )
     end
 
     def comments
