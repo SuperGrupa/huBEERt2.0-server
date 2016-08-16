@@ -1,6 +1,7 @@
 class PubsController < ApplicationController
   before_action :set_pub, only: [:show, :update, :destroy]
   before_action :sanitize_params, only: :index
+  before_action :authenticate_by_token, except: [:index, :show]
 
   PAGE_SIZE = 10
 

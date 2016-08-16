@@ -1,5 +1,6 @@
 class BeersController < ApplicationController
   before_action :set_beer, only: [:show, :update]
+  before_action :authenticate_by_token, except: :show
 
   # GET /beers
   def index
