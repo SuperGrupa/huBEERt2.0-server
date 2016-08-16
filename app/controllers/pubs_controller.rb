@@ -25,7 +25,7 @@ class PubsController < ApplicationController
     @pub = Pub.new(pub_params)
 
     if @pub.save
-      render json: @pub, status: :created, location: @pub
+      render json: @pub, status: :created
     else
       render json: @pub.errors, status: :unprocessable_entity
     end

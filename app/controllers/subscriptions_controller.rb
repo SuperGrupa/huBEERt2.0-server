@@ -15,7 +15,7 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.new(subscription_params)
 
     if @subscription.save
-      render json: @subscription, status: :created, location: user_subscription_url(@subscription.user_id, @subscription)
+      render json: @subscription, status: :created
     else
       render json: @subscription.errors, status: :unprocessable_entity
     end

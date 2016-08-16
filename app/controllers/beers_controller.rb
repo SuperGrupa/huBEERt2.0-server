@@ -17,7 +17,7 @@ class BeersController < ApplicationController
     @beer = Beer.new(beer_params)
 
     if @beer.save
-      render json: @beer, status: :created, location: @beer
+      render json: @beer, status: :created
     else
       render json: @beer.errors, status: :unprocessable_entity
     end

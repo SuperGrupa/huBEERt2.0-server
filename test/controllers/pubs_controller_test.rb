@@ -4,6 +4,7 @@ class PubsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @pub = pubs(:one)
     @city = cities(:one)
+    @user = users(:janusz)
   end
 
   test "should get index" do
@@ -13,12 +14,12 @@ class PubsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create pub" do
     assert_difference('Pub.count') do
-      post pubs_url, params: {
+      post pubs_url, params: authorizing_params(@user).merge(
         pub: {
           description: @pub.description, email: 'abc@def.com', hidden: @pub.hidden, name: @pub.name, phone: @pub.phone,
           address: @pub.address, city_id: @city.id
         }
-      }
+      )
     end
 
     assert_response 201
@@ -30,17 +31,17 @@ class PubsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update pub" do
-    patch pub_url(@pub), params: {
+    patch pub_url(@pub), params: authorizing_params(@user).merge(
       pub: {
         description: @pub.description, email: @pub.email, hidden: @pub.hidden, name: @pub.name, phone: @pub.phone
       }
-    }
+    )
     assert_response 200
   end
 
   test "should destroy pub" do
     assert_difference('Pub.count', -1) do
-      delete pub_url(@pub)
+      delete pub_url(@pub), params: authorizing_params(@user)
     end
 
     assert_response 204
