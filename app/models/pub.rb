@@ -35,7 +35,7 @@ class Pub < ApplicationRecord
       description: self.description,
       phone: self.phone,
       email: self.email,
-      city: self.city.name,
+      city: self.city.general_info,
       events: upcoming_events,
       offers: self.offers.length
     )
