@@ -3,6 +3,7 @@ require 'test_helper'
 class OffersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @offer = offers(:one)
+    @user = users(:janusz)
   end
 
   test "should get index" do
@@ -12,30 +13,30 @@ class OffersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create offer" do
     assert_difference('Offer.count') do
-      post pub_offers_url(@offer.pub_id), params: {
+      post pub_offers_url(@offer.pub_id), params: authorizing_params(@user).merge(
         offer: {
           beer_id: @offer.beer_id, pub_id: @offer.pub_id, value: @offer.value
         }
-      }
+      )
     end
 
     assert_response 201
   end
 
   test "should update offer" do
-    patch pub_offer_url(@offer.pub_id, @offer), params: {
+    patch pub_offer_url(@offer.pub_id, @offer), params: authorizing_params(@user).merge(
       offer: {
         beer_id: @offer.beer_id, pub_id: @offer.pub_id, value: @offer.value
       }
-    }
+    )
     assert_response 200
   end
 
   test "should destroy offer" do
     assert_difference('Offer.count', -1) do
-      delete pub_offer_url(@offer.pub_id, @offer)
+      delete pub_offer_url(@offer.pub_id, @offer), params: authorizing_params(@user)
     end
 
-    assert_response 204
+    assert_response 200
   end
 end

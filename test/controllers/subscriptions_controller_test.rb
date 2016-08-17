@@ -28,6 +28,6 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
       delete user_subscription_url(@subscription.user_id, @subscription), params: authorizing_params(@user)
     end
 
-    assert_response 204
+    assert_response 200
   end
 end

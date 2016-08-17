@@ -4,6 +4,14 @@ janusz:
   login: janusz
   email: janusz@pudelek.pl
   password_digest: <%= BCrypt::Password.create('qwerty') %>
+  role: pub-owner
+  city: one
+
+admin:
+  login: admin
+  email: admin@hubeert.com
+  password_digest: <%= BCrypt::Password.create('admin1') %>
+  role: admin
   city: one
 
 one:

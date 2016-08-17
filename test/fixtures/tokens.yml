@@ -3,7 +3,12 @@
 super:
   user: janusz
   expire: <%= 10.minutes.from_now %>
-  value: <%= "j"*128 %>
+  value: <%= "r"*128 %>
+
+admin-token:
+  user: admin
+  expire: <%= 10.minutes.from_now %>
+  value: <%= "s"*128 %>
 
 one:
   user: one

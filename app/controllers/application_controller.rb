@@ -1,4 +1,9 @@
 class ApplicationController < ActionController::API
+  def authorize(roles)
+    unauthorized(login: 'brak uprawnień') and return false unless roles.include? @user.role
+    true
+  end
+
   def authenticate_by_token
     return false unless prepare_user(:token)
 

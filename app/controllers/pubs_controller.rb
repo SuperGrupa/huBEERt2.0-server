@@ -1,17 +1,31 @@
 class PubsController < ApplicationController
   before_action :set_pub, only: [:show, :update, :destroy]
   before_action :sanitize_params, only: :index
-
-  PAGE_SIZE = 10
+  before_action :authorize_update, only: :update
+  before_action :authorize_admin,  only: [:create, :destroy]
 
   # GET /pubs?q&city&page
   def index
-    @pubs = Pub.includes(:comments)
-               .joins(:city)
-               .where("pubs.name ILIKE ? AND cities.name = ? AND hidden = false",
-                       "%#{params[:q]}%", params[:city])
+    if params[:q].present? && params[:city].present?
+      @pubs = Pub.includes(:comments)
+                 .joins(:city)
+                 .joins(:offers)
+                 .joins("JOIN beers ON offers.beer_id = beers.id")
+                 .where("(
+                          lower(pubs.name) SIMILAR TO :query OR lower(pubs.address) SIMILAR TO :query OR
+                          lower(beers.name) SIMILAR TO :query
+                         )
+                         AND cities.name = :city AND hidden = false",
+                         { query: "%(#{params[:q].downcase.split.join('|')})%", city: params[:city] })
+                 .group(:id)
+      page_size = 10
+    else
+      return unless authenticate_by_token && authorize(['admin'])
+      @pubs = Pub.all.includes(:comments).joins(:city).order(:name)
+      page_size = 30
+    end
 
-    render json: paginate(@pubs)
+    render json: paginate(@pubs, page_size)
   end
 
   # GET /pubs/1
@@ -24,7 +38,7 @@ class PubsController < ApplicationController
     @pub = Pub.new(pub_params)
 
     if @pub.save
-      render json: @pub, status: :created, location: @pub
+      render json: @pub, status: :created
     else
       render json: @pub.errors, status: :unprocessable_entity
     end
@@ -41,10 +55,20 @@ class PubsController < ApplicationController
 
   # DELETE /pubs/1
   def destroy
+    render json: @pub.detail_info
     @pub.destroy
   end
 
   private
+
+    def authorize_update
+      authenticate_by_token && authorize(['pub-owner', 'admin'])
+    end
+
+    def authorize_admin
+      authenticate_by_token && authorize(['admin'])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_pub
       @pub = Pub.find(params[:id])
@@ -57,15 +81,15 @@ class PubsController < ApplicationController
 
     # Convert :page param to integer
     def sanitize_params
-      params.require([:q, :page, :city])
+      params.require(:page)
       params.permit(:q, :page, :city)
 
       params[:page] = params[:page].to_i
     end
 
     # Create hash ready for client-side pagination
-    def paginate(pubs)
-      paginated_pubs = pubs.to_a.slice((params[:page] - 1)*PAGE_SIZE, PAGE_SIZE)
+    def paginate(pubs, page_size)
+      paginated_pubs = pubs.to_a.slice((params[:page] - 1)*page_size, page_size)
       { total_pubs: pubs.length, pubs: paginated_pubs.map { |pub| pub.general_info } }
     end
 end

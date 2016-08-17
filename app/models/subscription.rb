@@ -4,6 +4,7 @@ class Subscription < ApplicationRecord
 
   def info
     {
+      id: self.id,
       pub: {
         id: self.pub.id,
         name: self.pub.name,

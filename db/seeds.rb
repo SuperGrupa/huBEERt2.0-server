@@ -2,6 +2,8 @@ require 'bcrypt'
 
 class Seed
   def run
+    read_data
+
     cities
     beers
     pubs
@@ -17,6 +19,11 @@ class Seed
 
   private
 
+    def read_data
+      @streets = File.readlines('db/data/streets.txt')
+      @beers = File.readlines('db/data/beers.txt')
+    end
+
     def cities
       ['Poznań', 'Warszawa', 'Wrocław'].each do |city|
         City.create!(name: city)
@@ -24,9 +31,9 @@ class Seed
     end
 
     def beers
-      20.times do
+      @beers.each do |beer|
         Beer.create!(
-          name: Faker::Beer.name.slice(0, 30),
+          name: beer,
           description: Faker::Lorem.paragraph(3).slice(0, 300),
           alcohol: '%.1f' % Random.rand(10.0),
           extract: '%.1f' % (Random.rand(25.0) + 0.1),
@@ -55,7 +62,7 @@ class Seed
             phone: Random.rand(899999999) + 100000000,
             email: Faker::Internet.email(name),
             hidden: Faker::Boolean.boolean(0.2),
-            address: Faker::Address.street_address,
+            address: @streets.sample + " #{Random.rand(100) + 1}",
             city_id: city.id
           )
         end
@@ -65,16 +72,37 @@ class Seed
     def users
       logins_taken = Set.new
 
-      20.times do
+      9.times do
         login = choose_login(logins_taken)
         logins_taken << login
         User.create!(
           login: login,
           email: Faker::Internet.email(login),
           city_id: City.order("RANDOM()").first.id,
-          password_digest: BCrypt::Password.create('qwertyuiop')
+          password_digest: BCrypt::Password.create('qwertyuiop'),
         )
       end
+
+      3.times do |n|
+        login = choose_login(logins_taken)
+        logins_taken << login
+        User.create!(
+          login: login,
+          email: Faker::Internet.email(login),
+          city_id: City.order("RANDOM()").first.id,
+          password_digest: BCrypt::Password.create('qwertyuiop'),
+          role: 'pub-owner',
+          pub_id: Pub.all.offset(n).limit(1).first.id
+        )
+      end
+
+      User.create!(
+        login: 'admin',
+        email: Faker::Internet.email('admin'),
+        city_id: City.order("RANDOM()").first.id,
+        password_digest: BCrypt::Password.create('adminadmin'),
+        role: 'admin'
+      )
     end
 
     def comments
