@@ -2,6 +2,8 @@ require 'bcrypt'
 
 class Seed
   def run
+    read_data
+
     cities
     beers
     pubs
@@ -17,6 +19,11 @@ class Seed
 
   private
 
+    def read_data
+      @streets = File.readlines('db/data/streets.txt')
+      @beers = File.readlines('db/data/beers.txt')
+    end
+
     def cities
       ['Poznań', 'Warszawa', 'Wrocław'].each do |city|
         City.create!(name: city)
@@ -26,7 +33,7 @@ class Seed
     def beers
       20.times do
         Beer.create!(
-          name: Faker::Beer.name.slice(0, 30),
+          name: @beers.sample,
           description: Faker::Lorem.paragraph(3).slice(0, 300),
           alcohol: '%.1f' % Random.rand(10.0),
           extract: '%.1f' % (Random.rand(25.0) + 0.1),
@@ -55,7 +62,7 @@ class Seed
             phone: Random.rand(899999999) + 100000000,
             email: Faker::Internet.email(name),
             hidden: Faker::Boolean.boolean(0.2),
-            address: Faker::Address.street_address,
+            address: @streets.sample + " #{Random.rand(100) + 1}",
             city_id: city.id
           )
         end
