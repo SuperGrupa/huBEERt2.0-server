@@ -93,7 +93,7 @@ class Seed
         login: 'admin',
         email: Faker::Internet.email('admin'),
         city_id: City.order("RANDOM()").first.id,
-        password_digest: BCrypt::Password.create('admin1'),
+        password_digest: BCrypt::Password.create('adminadmin'),
         role: 'admin'
       )
     end

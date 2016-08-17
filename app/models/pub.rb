@@ -5,10 +5,12 @@ class Pub < ApplicationRecord
   has_many :subscriptions, dependent: :destroy
   belongs_to :city
 
+  after_initialize :defaults
+
   validates :name, presence: true, length: { maximum: 30 }
   validates :description, presence: true, length: { maximum: 300 }
-  validates :phone, numericality: { only_integer: true, greater_than: 0 }
-  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i },
+  validates :phone, allow_blank: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :email, allow_blank: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i },
                     uniqueness: true
   validates :hidden, inclusion: { in: [ true, false ] }
   validates :address, presence: true, length: { maximum: 50 }
@@ -46,6 +48,10 @@ class Pub < ApplicationRecord
   end
 
   private
+
+    def defaults
+      self.hidden = false unless self.hidden.present?
+    end
 
     def upcoming_events
       self.events.select { |ev| ev.date > Time.now }
