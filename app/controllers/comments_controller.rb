@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_pub, only: :index
+  before_action :authenticate_by_token, only: :create
 
   # GET /comments
   def index
@@ -13,7 +14,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
 
     if @comment.save
-      render json: @comment, status: :created, location: pub_comments_url(@comment.pub_id, @comment)
+      render json: @comment, status: :created
     else
       render json: @comment.errors, status: :unprocessable_entity
     end

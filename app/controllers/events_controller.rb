@@ -1,8 +1,9 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: :update
-  before_action :set_pub, only: :index
+  before_action :set_event, only: [:show, :update]
+  before_action :set_pub, only: [:index, :create]
+  before_action :authenticate_by_token, -> { authorize(['pub-owner', 'admin']) }, except: :index
 
-  # GET /events
+  # GET /pubs/:pub_id/events
   def index
     @events = Event.where("pub_id = :pub_id AND date > :now",
                           { pub_id: @pub.id, now: Time.now })
@@ -10,18 +11,24 @@ class EventsController < ApplicationController
     render json: @events.map { |event| event.detail_info }
   end
 
-  # POST /events
+  # GET /pubs/:pub_id/events/:event_id
+  def show
+    render json: @event.detail_info
+  end
+
+  # POST /pubs/:pub_id/events
   def create
-    @event = Event.new(event_params)
+    @event = @pub.events.create!(event_params)
+    @pub.subscribers.each { |user| @event.notify(user) }
 
     if @event.save
-      render json: @event, status: :created, location: pub_event_url(@event.pub_id, @event)
+      render json: @event, status: :created
     else
       render json: @event.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /events/1
+  # PATCH/PUT /pubs/:pub_id/events/:event_id
   def update
     if @event.update(event_params)
       render json: @event

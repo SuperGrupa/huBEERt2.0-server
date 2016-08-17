@@ -1,7 +1,7 @@
 class SubscriptionsController < ApplicationController
   before_action :set_subscription, only: :destroy
-  before_action :set_user, only: :index
-  before_action :authenticate_by_token, only: [:index, :destroy]
+  before_action :set_user, only: [:index, :destroy]
+  before_action :authenticate_by_token
 
   # GET /users/1/subscriptions
   def index
@@ -15,7 +15,7 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.new(subscription_params)
 
     if @subscription.save
-      render json: @subscription, status: :created, location: user_subscription_url(@subscription.user_id, @subscription)
+      render json: @subscription, status: :created
     else
       render json: @subscription.errors, status: :unprocessable_entity
     end
@@ -24,6 +24,7 @@ class SubscriptionsController < ApplicationController
   # DELETE /users/1/subscriptions/1
   def destroy
     @subscription.destroy
+    render json: @user.subscriptions.map { |sub| sub.info }
   end
 
   private

@@ -16,7 +16,6 @@ class UsersController < ApplicationController
       token = @user.tokens.create!(value: SecureRandom.hex(64), expire: 1.hour.from_now)
       render json: @user.logged_info(token), status: :created
     else
-      p @user.errors
       render json: @user.errors, status: :unprocessable_entity
     end
   end
