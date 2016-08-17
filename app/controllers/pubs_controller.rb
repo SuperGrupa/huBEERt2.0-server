@@ -1,8 +1,8 @@
 class PubsController < ApplicationController
   before_action :set_pub, only: [:show, :update, :destroy]
   before_action :sanitize_params, only: :index
-  before_action :authenticate_by_token, -> { authorize(['pub-owner', 'admin']) }, only: :update
-  before_action :authenticate_by_token, -> { authorize(['admin']) }, only: [:create, :destroy]
+  before_action :authorize_update, only: :update
+  before_action :authorize_admin,  only: [:create, :destroy]
 
   # GET /pubs?q&city&page
   def index
@@ -60,6 +60,15 @@ class PubsController < ApplicationController
   end
 
   private
+
+    def authorize_update
+      authenticate_by_token && authorize(['pub-owner', 'admin'])
+    end
+
+    def authorize_admin
+      authenticate_by_token && authorize(['admin'])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_pub
       @pub = Pub.find(params[:id])

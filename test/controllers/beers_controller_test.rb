@@ -3,7 +3,7 @@ require 'test_helper'
 class BeersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @beer = beers(:pils)
-    @user = users(:janusz)
+    @user = users(:admin)
   end
 
   test "should create beer" do

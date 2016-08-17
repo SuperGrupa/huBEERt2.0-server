@@ -25,10 +25,7 @@ class PubTest < ActiveSupport::TestCase
     assert_not @pub.valid?
   end
 
-  test "phone must be present integer" do
-    @pub.phone = ""
-    assert_not @pub.valid?
-
+  test "phone must be integer" do
     @pub.phone = "abc"
     assert_not @pub.valid?
   end
