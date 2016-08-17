@@ -9,12 +9,19 @@ class PubsController < ApplicationController
     if params[:q].present? && params[:city].present?
       @pubs = Pub.includes(:comments)
                  .joins(:city)
-                 .where("pubs.name ILIKE ? AND cities.name = ? AND hidden = false",
-                         "%#{params[:q]}%", params[:city])
+                 .joins(:offers)
+                 .joins("JOIN beers ON offers.beer_id = beers.id")
+                 .where("(
+                          pubs.name ILIKE :query OR pubs.address ILIKE :query OR
+                          beers.name ILIKE :query
+                         )
+                         AND cities.name = :city AND hidden = false",
+                         { query: "%#{params[:q]}%", city: params[:city] })
+                 .group(:id)
       page_size = 10
     else
-      #return unless authenticate_by_token && authorize(['admin'])
-      @pubs = Pub.includes(:comments).joins(:city).order(:name)
+      return unless authenticate_by_token && authorize(['admin'])
+      @pubs = Pub.all.includes(:comments).joins(:city).order(:name)
       page_size = 30
     end
 
