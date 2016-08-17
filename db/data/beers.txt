@@ -1,10 +1,10 @@
 Tyskie Gronie
-Tyskie Klasyczna
-Fortuna wiśniowa
-Fortuna czarna
-Fortuna śliwkowa
-Fortuna miodowe ciemne
-Fortuna mirabelka
+Tyskie Klasyczne
+Fortuna Wiśniowa
+Fortuna Czarna
+Fortuna Śliwkowa
+Fortuna Miodowe ciemne
+Fortuna Mirabelka
 Miłosław Pilzner
 Miłosław Koźlak
 Miłosław Marcowe
@@ -42,9 +42,9 @@ Obolon Svitle
 Żywiec Marcowe
 Zlatý Bažant Ležiák
 Amber Koźlak
-Namysłów Złoty Denar Chmielowy
+Namysłów Złoty Denar
 Grolsch
-Paulaner Hefweisbier Naturtrüb
+Paulaner Hefweisbier Naturtüb
 Argus Maestic
 Starovar Premium
 Czarnków Noteckie Ciemne
