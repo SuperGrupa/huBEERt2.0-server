@@ -12,11 +12,11 @@ class PubsController < ApplicationController
                  .joins(:offers)
                  .joins("JOIN beers ON offers.beer_id = beers.id")
                  .where("(
-                          pubs.name ILIKE :query OR pubs.address ILIKE :query OR
-                          beers.name ILIKE :query
+                          lower(pubs.name) SIMILAR TO :query OR lower(pubs.address) SIMILAR TO :query OR
+                          lower(beers.name) SIMILAR TO :query
                          )
                          AND cities.name = :city AND hidden = false",
-                         { query: "%#{params[:q]}%", city: params[:city] })
+                         { query: "%(#{params[:q].downcase.split.join('|')})%", city: params[:city] })
                  .group(:id)
       page_size = 10
     else

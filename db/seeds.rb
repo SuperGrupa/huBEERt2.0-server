@@ -31,9 +31,9 @@ class Seed
     end
 
     def beers
-      20.times do
+      @beers.each do |beer|
         Beer.create!(
-          name: @beers.sample,
+          name: beer,
           description: Faker::Lorem.paragraph(3).slice(0, 300),
           alcohol: '%.1f' % Random.rand(10.0),
           extract: '%.1f' % (Random.rand(25.0) + 0.1),
